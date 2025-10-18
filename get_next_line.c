@@ -6,7 +6,7 @@
 /*   By: flvejux <flvejux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 08:56:23 by flvejux           #+#    #+#             */
-/*   Updated: 2025/10/18 09:18:22 by flvejux          ###   ########.fr       */
+/*   Updated: 2025/10/18 09:42:32 by flvejux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*read_line(int fd, char *stash)
 			return (NULL);
 		}
 		if (count == 0)
-			return ;
+			break ;
 		buffer[count] = '\0';
 		stash = ft_strjoin(stash, buffer);
 		if (!stash)
@@ -52,8 +52,8 @@ static char	*get_line(char **stash)
 	nl = ft_strchr(*stash, '\n');
 	if (nl != NULL)
 	{
-		line = ft_substr(stash, 0, nl - *stash + 1);
-		ft_strlcpy(tmp, nl, 2);
+		line = ft_substr(*stash, 0, nl - *stash + 1);
+		tmp = ft_strdup(nl + 1);
 		free(*stash);
 		*stash = tmp;
 		if (!stash || !line)
@@ -61,7 +61,7 @@ static char	*get_line(char **stash)
 	}
 	else
 	{
-		ft_strlcpy(line, *stash, ft_strlen(*stash));
+		line = ft_strdup(*stash);
 		free(*stash);
 		*stash = NULL;
 		if (!line)
