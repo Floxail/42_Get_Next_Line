@@ -6,7 +6,7 @@
 /*   By: flvejux <flvejux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 08:56:23 by flvejux           #+#    #+#             */
-/*   Updated: 2025/10/18 09:50:59 by flvejux          ###   ########.fr       */
+/*   Updated: 2025/10/18 10:31:26 by flvejux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*read_line(int fd, char *stash)
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	while (!ft_strchr(stash, '\n') && count > 0)
+	while (!ft_strchr(stash, '\n') && count != 0)
 	{
 		count = (int)read(fd, buffer, BUFFER_SIZE);
 		if (count < 0)
@@ -85,17 +85,6 @@ char	*get_next_line(int fd)
 	free (buf);
 	if (!tmp)
 		return (line);
-	tmp = get_line(line);
+	tmp = get_line(&line);
 	return (tmp);
 }
-
-size_t	ft_strlen(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
