@@ -6,7 +6,7 @@
 /*   By: flvejux <flvejux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 08:56:23 by flvejux           #+#    #+#             */
-/*   Updated: 2025/10/17 13:06:03 by flvejux          ###   ########.fr       */
+/*   Updated: 2025/10/18 09:18:22 by flvejux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,37 @@ static char	*read_line(int fd, char *stash)
 		if (!stash)
 			return (NULL);
 	}
+	free(buffer);
+	return (stash);
 }
 
-static char	*get_line(char *str)
+static char	*get_line(char **stash)
 {
-	int		i;
+	char	*nl;
 	char	*tmp;
+	char	*line;
 
-	i = 0;
-	while (str[i] != '\n' && str[i])
-		i++;
-	if (!str[i])
+	if (!*stash || !**stash)
 		return (NULL);
-	tmp = ft_substr(str, 0, (i + 1) - ft_strlen(str));
-	if (!tmp)
-		return (0);
-	tmp[i + 1] = '\0';
-	return (tmp);
+	nl = ft_strchr(*stash, '\n');
+	if (nl != NULL)
+	{
+		line = ft_substr(stash, 0, nl - *stash + 1);
+		ft_strlcpy(tmp, nl, 2);
+		free(*stash);
+		*stash = tmp;
+		if (!stash || !line)
+			return (NULL);
+	}
+	else
+	{
+		ft_strlcpy(line, *stash, ft_strlen(*stash));
+		free(*stash);
+		*stash = NULL;
+		if (!line)
+			return (NULL);
+	}
+	return (line);
 }
 
 char	*get_next_line(int fd)
