@@ -6,13 +6,13 @@
 /*   By: flvejux <flvejux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 08:25:44 by flvejux           #+#    #+#             */
-/*   Updated: 2025/10/18 10:29:12 by flvejux          ###   ########.fr       */
+/*   Updated: 2025/10/18 10:37:27 by flvejux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*result;
 	char	*ptr;
