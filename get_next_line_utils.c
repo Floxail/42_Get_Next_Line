@@ -6,7 +6,7 @@
 /*   By: flvejux <flvejux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 08:25:44 by flvejux           #+#    #+#             */
-/*   Updated: 2025/10/18 10:37:27 by flvejux          ###   ########.fr       */
+/*   Updated: 2025/10/18 11:44:30 by flvejux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,26 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	sub[i] = '\0';
 	return (sub);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	char	*dup;
+	size_t	len;
+	size_t	i;
+
+	len = ft_strlen(s1);
+	dup = malloc(sizeof(char) * (len + 1));
+	if (dup == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		dup[i] = s1[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
 }
 
 size_t	ft_strlen(const char *str)

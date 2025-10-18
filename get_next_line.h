@@ -6,7 +6,7 @@
 /*   By: flvejux <flvejux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 08:41:33 by flvejux           #+#    #+#             */
-/*   Updated: 2025/10/18 09:52:40 by flvejux          ###   ########.fr       */
+/*   Updated: 2025/10/18 12:46:44 by flvejux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <fcntl.h>
 
 char	*get_next_line(int fd);
 char	*ft_strdup(const char *s);
@@ -26,6 +27,5 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *str);
-size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 
 #endif

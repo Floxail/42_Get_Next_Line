@@ -6,7 +6,7 @@
 /*   By: flvejux <flvejux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 08:56:23 by flvejux           #+#    #+#             */
-/*   Updated: 2025/10/18 10:31:26 by flvejux          ###   ########.fr       */
+/*   Updated: 2025/10/18 13:42:52 by flvejux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,29 @@ static char	*read_line(int fd, char *stash)
 	return (stash);
 }
 
-static char	*get_line(char **stash)
+static char	*get_line(char *stash)
 {
 	char	*nl;
 	char	*tmp;
 	char	*line;
 
-	if (!*stash || !**stash)
+	if (!stash || !stash)
 		return (NULL);
-	nl = ft_strchr(*stash, '\n');
+	nl = ft_strchr(stash, '\n');
 	if (nl != NULL)
 	{
-		line = ft_substr(*stash, 0, nl - *stash + 1);
+		line = ft_substr(stash, 0, nl - stash + 1);
 		tmp = ft_strdup(nl + 1);
-		free(*stash);
-		*stash = tmp;
+		free(stash);
+		stash = tmp;
 		if (!stash || !line)
 			return (NULL);
 	}
 	else
 	{
-		line = ft_strdup(*stash);
-		free(*stash);
-		*stash = NULL;
+		line = ft_strdup(stash);
+		free(stash);
+		stash = NULL;
 		if (!line)
 			return (NULL);
 	}
@@ -85,6 +85,6 @@ char	*get_next_line(int fd)
 	free (buf);
 	if (!tmp)
 		return (line);
-	tmp = get_line(&line);
-	return (tmp);
+	buf = get_line(line);
+	return (buf);
 }
