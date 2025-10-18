@@ -6,7 +6,7 @@
 /*   By: flvejux <flvejux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 08:25:44 by flvejux           #+#    #+#             */
-/*   Updated: 2025/10/18 09:36:50 by flvejux          ###   ########.fr       */
+/*   Updated: 2025/10/18 09:51:20 by flvejux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,21 @@ char	*ft_strdup(const char *s)
 	return (dest);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (str[i])
+	if (size > 0)
+	{
+		while (src[i] && i != (size - 1))
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		dest[i] = '\0';
+	}
+	while (src[i])
 		i++;
 	return (i);
 }
