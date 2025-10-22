@@ -3,88 +3,107 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flvejux <flvejux@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flox <flox@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 08:56:23 by flvejux           #+#    #+#             */
-/*   Updated: 2025/10/18 13:42:52 by flvejux          ###   ########.fr       */
+/*   Updated: 2025/10/22 17:13:21 by flox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "get_next_line.h"
 
-static char	*read_line(int fd, char *stash)
+static char	*cat_buff(char *stock, char *buffer)
 {
-	int		count;
-	char	*buffer;
+	char	*tmp;
+
+	tmp = stock;
+	stock = ft_strjoin(stock, buffer);
+	free (tmp);
+	return (stock);
+}
+
+
+static char	*read_line(int fd, char *stock)
+{
+	int			count;
+	char		*buffer;
 
 	count = 1;
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	while (!ft_strchr(stash, '\n') && count != 0)
+	if (!stock)
+		stock = ft_strdup("");
+	while (!ft_strchr(stock, '\n') && count != 0)
 	{
 		count = (int)read(fd, buffer, BUFFER_SIZE);
 		if (count < 0)
-		{
-			free(buffer);
-			free(stash);
-			return (NULL);
-		}
+			return (free (buffer), free (stock), NULL);
 		if (count == 0)
 			break ;
 		buffer[count] = '\0';
-		stash = ft_strjoin(stash, buffer);
-		if (!stash)
-			return (NULL);
+		stock = cat_buff(stock, buffer);
+		if (!stock)
+			return (free (buffer), NULL);
 	}
-	free(buffer);
-	return (stash);
+	return (free (buffer), stock);
 }
 
-static char	*get_line(char *stash)
+static char	*get_line(char **stock)
 {
-	char	*nl;
-	char	*tmp;
-	char	*line;
+	static char	*line;
+	static char	*n_stock;
+	int			len;
 
-	if (!stash || !stash)
-		return (NULL);
-	nl = ft_strchr(stash, '\n');
-	if (nl != NULL)
+	len = 0;
+	while ((*stock)[len] != '\n' && (*stock)[len])
+		len++;
+	if ((*stock)[len] == '\n')
+		len++;
+	line = ft_substr(*stock, 0, len);
+	if (!line)
+		return (free(*stock), *stock = NULL, NULL);
+	if (!(*stock)[len])
 	{
-		line = ft_substr(stash, 0, nl - stash + 1);
-		tmp = ft_strdup(nl + 1);
-		free(stash);
-		stash = tmp;
-		if (!stash || !line)
-			return (NULL);
+		free(*stock);
+		*stock = NULL;
+		return (line);
 	}
-	else
-	{
-		line = ft_strdup(stash);
-		free(stash);
-		stash = NULL;
-		if (!line)
-			return (NULL);
-	}
+	n_stock = ft_strdup(*stock + len);
+	free (*stock);
+	*stock = n_stock;
 	return (line);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*line;
-	char		*tmp;
 	char		*buf;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	buf = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!buf)
-		return (0);
-	tmp = read_line(fd, buf);
-	free (buf);
-	if (!tmp)
-		return (line);
-	buf = get_line(line);
+	line = read_line(fd, line);
+	if (!line || !*line)
+		return (free(line), line = NULL, NULL);
+	buf = get_line(&line);
 	return (buf);
 }
+
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*buff;
+
+// 	buff = 0;
+// 	fd = open("./a.txt", O_RDONLY);
+// 	if (fd == -1)
+// 		return (1);
+// 	while ((buff = get_next_line(fd)) != NULL)
+// 	{
+// 		printf("GNL:%s",buff);
+// 		free(buff);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
