@@ -6,7 +6,7 @@
 /*   By: flox <flox@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 08:56:23 by flvejux           #+#    #+#             */
-/*   Updated: 2025/10/22 17:13:21 by flox             ###   ########.fr       */
+/*   Updated: 2025/10/22 19:21:00 by flox             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static char	*cat_buff(char *stock, char *buffer)
 	free (tmp);
 	return (stock);
 }
-
 
 static char	*read_line(int fd, char *stock)
 {
