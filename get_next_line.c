@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flox <flox@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: flvejux <flvejux@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 08:56:23 by flvejux           #+#    #+#             */
-/*   Updated: 2025/10/22 19:21:00 by flox             ###   ########.fr       */
+/*   Updated: 2025/11/12 07:49:39 by flvejux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,9 @@ static char	*read_line(int fd, char *stock)
 		stock = ft_strdup("");
 	while (!ft_strchr(stock, '\n') && count != 0)
 	{
-		count = (int)read(fd, buffer, BUFFER_SIZE);
+		count = read(fd, buffer, BUFFER_SIZE);
 		if (count < 0)
 			return (free (buffer), free (stock), NULL);
-		if (count == 0)
-			break ;
 		buffer[count] = '\0';
 		stock = cat_buff(stock, buffer);
 		if (!stock)
@@ -51,9 +49,9 @@ static char	*read_line(int fd, char *stock)
 
 static char	*get_line(char **stock)
 {
-	static char	*line;
-	static char	*n_stock;
-	int			len;
+	char	*line;
+	char	*n_stock;
+	int		len;
 
 	len = 0;
 	while ((*stock)[len] != '\n' && (*stock)[len])
@@ -80,7 +78,7 @@ char	*get_next_line(int fd)
 	static char	*line;
 	char		*buf;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = read_line(fd, line);
 	if (!line || !*line)
